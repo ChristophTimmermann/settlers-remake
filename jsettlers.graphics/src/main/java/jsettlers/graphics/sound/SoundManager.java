@@ -257,7 +257,7 @@ public class SoundManager {
 
 		initialize();
 
-		if (soundStarts != null && soundType.ordinal() < SEQUENCE_N && area != null) {
+		if (soundStarts != null && soundType != null && soundType.ordinal() < SEQUENCE_N && area != null) {
 			int[] alternatives = soundStarts[soundType.ordinal()];
 			if (alternatives != null && alternatives.length > 0) {
 				int rand = random.nextInt(alternatives.length);
