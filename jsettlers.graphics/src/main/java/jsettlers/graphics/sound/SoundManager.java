@@ -16,9 +16,7 @@ package jsettlers.graphics.sound;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
-import java.io.Reader;
 import java.util.Random;
 
 import go.graphics.sound.ISoundDataRetriever;
@@ -26,7 +24,6 @@ import go.graphics.sound.SoundPlayer;
 import jsettlers.common.CommonConstants;
 import jsettlers.common.map.shapes.MapRectangle;
 import jsettlers.common.position.ShortPoint2D;
-import jsettlers.common.resources.ResourceManager;
 import jsettlers.common.sound.ESoundType;
 import jsettlers.common.utils.FileUtils;
 import jsettlers.graphics.map.MapDrawContext;
