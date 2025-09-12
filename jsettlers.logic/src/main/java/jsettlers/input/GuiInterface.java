@@ -264,11 +264,12 @@ public class GuiInterface implements IMapInterfaceListener, ITaskExecutorGuiInte
                         connector.playSound(ESoundType.SET_WORKER_AREA, 1.0f);
 					}
 				} else {
+                    moveTo(moveToAction.getPosition(), moveToAction.getMoveToType());
+
                     // Check if at least one selected movable is IAttackableMovable
                     boolean isAttackableMovable = currentSelection.stream().anyMatch(iSelectable -> iSelectable instanceof IAttackableMovable);
 
                     if(isAttackableMovable) {
-                        moveTo(moveToAction.getPosition(), moveToAction.getMoveToType());
                         connector.playSound(ESoundType.MOVE_ACTION, 1.0f);
                     }
 				}
