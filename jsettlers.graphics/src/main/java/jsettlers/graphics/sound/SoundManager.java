@@ -225,7 +225,7 @@ public class SoundManager {
 	public void playSound(ESoundType soundType, float volume) {
 		initialize();
 
-		if (soundStarts != null &&  soundType.ordinal() < SEQUENCE_N) {
+		if (soundStarts != null && soundType != null && soundType.ordinal() < SEQUENCE_N) {
 			int[] alternatives = soundStarts[soundType.ordinal()];
 			if (alternatives != null && alternatives.length > 0) {
 				int rand = random.nextInt(alternatives.length);
