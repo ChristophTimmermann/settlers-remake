@@ -16,7 +16,9 @@ package jsettlers.graphics.sound;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
+import java.io.Reader;
 import java.util.Random;
 
 import go.graphics.sound.ISoundDataRetriever;
@@ -24,9 +26,13 @@ import go.graphics.sound.SoundPlayer;
 import jsettlers.common.CommonConstants;
 import jsettlers.common.map.shapes.MapRectangle;
 import jsettlers.common.position.ShortPoint2D;
+import jsettlers.common.resources.ResourceManager;
+import jsettlers.common.sound.ESoundType;
 import jsettlers.common.utils.FileUtils;
 import jsettlers.graphics.map.MapDrawContext;
 import jsettlers.graphics.image.reader.bytereader.ByteReader;
+
+
 
 /*
  * This class manages reading and playing of the sound file.
@@ -38,6 +44,7 @@ import jsettlers.graphics.image.reader.bytereader.ByteReader;
  * 1 (6 times): bricklayer <br>
  * 2 (3 times): digger <br>
  * 3 (twice): stonecutter <br>
+ * 4: plant tree?
  * 5: sawmiller <br>
  * 6/7 smith <br>
  * 8/9 and 12: farmer <br>
@@ -60,11 +67,18 @@ import jsettlers.graphics.image.reader.bytereader.ByteReader;
  * 42: wind/mill: 5s <br>
  * 43/44: distillery
  * 45: charcoal burner coughing
- * 46-50 no sound
+ * 46-50 UI sounds
+ * 48: decrease UI sound
+ * 49: increase UI sound
  * 51: trigger for building destruction
- * 56: lock <br>
- * 57-59: notification sounds<br>
+ * 52: set distribution of goods
+ * 54: pause construction
+ * 56: lock storage <br>
+ * 57: move action
+ * 58-59: notification sounds<br>
+ * 61 GUI click sound
  * 62: Ui klick <br>
+ * 63-66: GUI click sounds
  * 67: desert
  * 68, 68b: Sea <br>
  * 69, 69b: Bird <br>
@@ -85,8 +99,9 @@ import jsettlers.graphics.image.reader.bytereader.ByteReader;
  * 91: fire <br>
  * 92: small fire on wood or building <br>
  * 93: collapsing building
- * 100-110: Attacked (same sound?) ? <br>
- * 106: announcement of missing tool
+ * 95: set worker area
+ * 100-109: Attacked (same sound?) ? <br>
+ * 110: announcement of missing tool
  * 111: 112: gong, <br>
  * 113: (4 times): amazone killed
  * 116: refused center of work displacement
@@ -205,16 +220,16 @@ public class SoundManager {
 	/**
 	 * Plays a given sound.
 	 *
-	 * @param soundId
-	 * 		The sound id to play.
+	 * @param soundType
+	 * 		The sound to play.
 	 * @param volume
 	 * 		The volume
 	 */
-	public void playSound(int soundId, float volume) {
+	public void playSound(ESoundType soundType, float volume) {
 		initialize();
 
-		if (soundStarts != null && soundId >= 0 && soundId < SEQUENCE_N) {
-			int[] alternatives = soundStarts[soundId];
+		if (soundStarts != null &&  soundType.ordinal() < SEQUENCE_N) {
+			int[] alternatives = soundStarts[soundType.ordinal()];
 			if (alternatives != null && alternatives.length > 0) {
 				int rand = random.nextInt(alternatives.length);
 				soundPlayer.playSound(alternatives[rand], volume, volume);
@@ -222,15 +237,15 @@ public class SoundManager {
 		}
 	}
 
-	public void playSound(int soundId, float volume, ShortPoint2D position) {
-		playSound(soundId, volume, position.x, position.y);
+	public void playSound(ESoundType soundType, float volume, ShortPoint2D position) {
+		playSound(soundType, volume, position.x, position.y);
 	}
 
 	/**
 	 * Plays a given sound at a given coordinate
 	 *
-	 * @param soundId
-	 * 		The sound id to play
+	 * @param soundType
+	 * 		The sound to play
 	 * @param volume
 	 * 		The volume
 	 * @param x
@@ -238,15 +253,15 @@ public class SoundManager {
 	 * @param y
 	 * 		The y coordinate of the sound
 	 */
-	public void playSound(int soundId, float volume, int x, int y) {
+	public void playSound(ESoundType soundType, float volume, int x, int y) {
 		if (map == null || map.getVisibleStatus(x, y) <= CommonConstants.FOG_OF_WAR_EXPLORED) { // only play sounds when fog of war level is higher than explored
 			return;
 		}
 
 		initialize();
 
-		if (soundStarts != null && soundId >= 0 && soundId < SEQUENCE_N && area != null) {
-			int[] alternatives = soundStarts[soundId];
+		if (soundStarts != null && soundType.ordinal() < SEQUENCE_N && area != null) {
+			int[] alternatives = soundStarts[soundType.ordinal()];
 			if (alternatives != null && alternatives.length > 0) {
 				int rand = random.nextInt(alternatives.length);
 
