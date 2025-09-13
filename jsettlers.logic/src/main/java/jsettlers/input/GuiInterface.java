@@ -103,6 +103,7 @@ import jsettlers.logic.buildings.WorkAreaBuilding;
 import jsettlers.logic.buildings.military.occupying.OccupyingBuilding;
 import jsettlers.logic.buildings.workers.DockyardBuilding;
 import jsettlers.logic.constants.MatchConstants;
+import jsettlers.logic.movable.cargo.DonkeyMovable;
 import jsettlers.logic.movable.interfaces.IAttackableMovable;
 import jsettlers.logic.movable.interfaces.IDebugable;
 import jsettlers.logic.player.Player;
@@ -266,8 +267,8 @@ public class GuiInterface implements IMapInterfaceListener, ITaskExecutorGuiInte
 				} else {
                     moveTo(moveToAction.getPosition(), moveToAction.getMoveToType());
 
-                    // Check if at least one selected movable is IAttackableMovable
-                    boolean isAttackableMovable = currentSelection.stream().anyMatch(iSelectable -> iSelectable instanceof IAttackableMovable);
+                    // Check if at least one selected movable is IAttackableMovable (except donkeys).
+                    boolean isAttackableMovable = currentSelection.stream().anyMatch(iSelectable -> iSelectable instanceof IAttackableMovable && !(iSelectable instanceof DonkeyMovable));
 
                     if(isAttackableMovable) {
                         connector.playSound(ESoundType.MOVE_ACTION, 1.0f);
