@@ -276,7 +276,7 @@ public class SoundManager {
                 float screenX = (float)soundScreenPos.getX() / width;
                 float screenY = (float)soundScreenPos.getY() / height;
 
-                float zeroDistance = 2.5f;
+                float zeroDistance = 1.0f;
                 float fullDistance = 0.25f;
                 float screenXCenter = 0.5f;
                 float screenYCenter = 0.5f;
@@ -303,7 +303,7 @@ public class SoundManager {
                 }
 
                 // Zoom level volume. It should fade to 0.05 when zoomed out to minimum zoom
-                float minZoomForFull = CommonConstants.MAXIMUM_ZOOM - (CommonConstants.MAXIMUM_ZOOM - CommonConstants.MINIMUM_ZOOM) / 1.5f;
+                float minZoomForFull = CommonConstants.MAXIMUM_ZOOM - (CommonConstants.MAXIMUM_ZOOM - CommonConstants.MINIMUM_ZOOM) / 2f;
                 float minZoomVolume = 0.05f;
                 float zoomVolume = 1;
                 if (zoom < minZoomForFull) {
