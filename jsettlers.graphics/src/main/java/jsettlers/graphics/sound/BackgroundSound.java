@@ -77,21 +77,21 @@ public class BackgroundSound implements Runnable {
 
 				if (hasTree(x, y) && Math.random() < BIRDS_FREQUENCY) {
 					if (Math.random() < BIRDS1_FRACTION) {
-						sound.playSound(ESoundType.BIRD_A, BIRDS_VOLUME, x, y);
+						sound.playSound(ESoundType.BIRD_A, BIRDS_VOLUME, x, y, false);
 					} else {
-						sound.playSound(ESoundType.BIRD_B, BIRDS_VOLUME, x, y);
+						sound.playSound(ESoundType.BIRD_B, BIRDS_VOLUME, x, y, false);
 					}
 				} else if (hasDesert(x, y)) {
-					sound.playSound(ESoundType.DESERT, DESERT_VOLUME, x, y);
+					sound.playSound(ESoundType.DESERT, DESERT_VOLUME, x, y, false);
 				} else if (hasWater(x, y)) {
-					sound.playSound(ESoundType.SEA_A, WATER_VOLUME, x, y);
+					sound.playSound(ESoundType.SEA_A, WATER_VOLUME, x, y, false);
 				} else if (hasMountain(x, y)) {
-					sound.playSound(ESoundType.WIND, MOUNTAIN_VOLUME, x, y);
+					sound.playSound(ESoundType.WIND, MOUNTAIN_VOLUME, x, y, false);
 				} else for (int x1 = 0; x1 < screen.getWidth(); x1++) {
 					if (hasRiver(x0 + x1, y)) {
-						sound.playSound(ESoundType.WATER_RIVER, RIVER_VOLUME, x0 + x1, y);
+						sound.playSound(ESoundType.WATER_RIVER, RIVER_VOLUME, x0 + x1, y, false);
 					} else if(hasBeeHive(x0 + x1, y)) {
-						sound.playSound(ESoundType.BEES, BEES_VOLUME, x0 + x1, y);
+						sound.playSound(ESoundType.BEES, BEES_VOLUME, x0 + x1, y, false);
 					}
 				}
 			}

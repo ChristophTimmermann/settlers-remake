@@ -427,7 +427,7 @@ public class MageMovable extends AttackableHumanMovable implements IMageMovable 
 
 		if(animation != -1) {
 			for (ShortPoint2D point : effectLocations) {
-				grid.addSelfDeletingMapObject(point, sound, animation, duration, player);
+				grid.addSelfDeletingMapObject(point, sound, true, animation, duration, player);
 			}
 		}
 

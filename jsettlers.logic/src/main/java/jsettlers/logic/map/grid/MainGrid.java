@@ -1535,9 +1535,9 @@ public final class MainGrid implements Serializable {
 		}
 
 		@Override
-		public void addSelfDeletingMapObject(ShortPoint2D point, ESoundType soundType, int animation, float duration, Player player) {
-			mapObjectsManager.addSelfDeletingMapObject(point, soundType, animation, duration, player);
-		}
+        public void addSelfDeletingMapObject(ShortPoint2D point, ESoundType soundType, boolean playInFog, int animation, float duration, Player player) {
+            mapObjectsManager.addSelfDeletingMapObject(point, soundType, playInFog, animation, duration, player);
+        }
 
 		@Override
 		public void addEyeMapObject(ShortPoint2D position, short radius, float duration, Player player) {

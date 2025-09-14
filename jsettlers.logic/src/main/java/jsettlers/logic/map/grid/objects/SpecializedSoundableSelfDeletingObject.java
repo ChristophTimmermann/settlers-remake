@@ -13,11 +13,13 @@ class SpecializedSoundableSelfDeletingObject extends SoundableSelfDeletingObject
     
 	private final ESoundType sound;
 	private int animation;
+    private final boolean playInFog;
 
-	public SpecializedSoundableSelfDeletingObject(ShortPoint2D point, ESoundType sound, int animation, float duration, Player player) {
+	public SpecializedSoundableSelfDeletingObject(ShortPoint2D point, ESoundType sound, boolean playInFog, int animation, float duration, Player player) {
 		super(point, EMapObjectType.SPELL_EFFECT, duration, player);
 		this.animation = animation;
 		this.sound = sound;
+        this.playInFog = playInFog;
 	}
 
 	public ESoundType getSound() {
@@ -26,5 +28,9 @@ class SpecializedSoundableSelfDeletingObject extends SoundableSelfDeletingObject
 
 	public int getAnimation() {
 		return animation;
+	}
+
+	public boolean isPlayInFog() {
+		return playInFog;
 	}
 }

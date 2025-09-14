@@ -399,8 +399,11 @@ public final class MapObjectsManager implements IScheduledTimerable, Serializabl
 		timingQueue.add(new TimeEvent(object, duration, true));
 	}
 
-	public void addSelfDeletingMapObject(ShortPoint2D point, ESoundType soundType, int animation, float duration, Player player) {
-		SelfDeletingMapObject object = new SpecializedSoundableSelfDeletingObject(point, soundType, animation, duration, player);
+    public void addSelfDeletingMapObject(ShortPoint2D point, ESoundType soundType, int animation, float duration, Player player) {
+        this.addSelfDeletingMapObject(point, soundType, false, animation, duration, player);
+    }
+	public void addSelfDeletingMapObject(ShortPoint2D point, ESoundType soundType, boolean playInFog, int animation, float duration, Player player) {
+		SelfDeletingMapObject object = new SpecializedSoundableSelfDeletingObject(point, soundType, playInFog, animation, duration, player);
 		addMapObject(point, object);
 		timingQueue.add(new TimeEvent(object, duration, true));
 	}

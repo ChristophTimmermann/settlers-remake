@@ -245,6 +245,15 @@ public class MapObjectDrawer {
 	 */
 	public void drawMapObject(int x, int y, IMapObject object) {
 		byte fogStatus = visibleGrid != null ? visibleGrid[x][y] : CommonConstants.FOG_OF_WAR_VISIBLE;
+
+        // We should draw spell effects even in fog of war if they are configured to do so.
+        if(object instanceof ISpecializedMapObject) {
+        	ISpecializedMapObject smo = (ISpecializedMapObject) object;
+        	if(smo.isPlayInFog()) {
+        		fogStatus = CommonConstants.FOG_OF_WAR_VISIBLE;
+        	}
+        }
+
 		if (fogStatus == 0) {
 			return; // break
 		}
@@ -982,11 +991,17 @@ public class MapObjectDrawer {
 		if(soundType == null) return;
 
 		if (object instanceof IBuilding.ISoundRequestable) {
-			sound.playSound(soundType, 1, x, y);
+			sound.playSound(soundType, 1, x, y, false);
 		} else if (object instanceof ISoundable) {
 			ISoundable soundable = (ISoundable) object;
 			if (!soundable.isSoundPlayed()) {
-				sound.playSound(soundType, 1, x, y);
+                boolean playInFog = false;
+                if(soundable instanceof ISpecializedMapObject)
+                {
+                    ISpecializedMapObject specialized = (ISpecializedMapObject) soundable;
+                    playInFog = specialized.isPlayInFog();
+                }
+				sound.playSound(soundType, 1, x, y, playInFog);
 				soundable.setSoundPlayed();
 			}
 		}
